@@ -71,8 +71,8 @@ a:hover{text-decoration:underline}
 <div class="card">
 <h2>Credentials / API Keys</h2>
 <div class="kv"><span class="label">GoDaddy Domain</span><span class="value">LiftlineAI.com</span></div>
-<div class="kv"><span class="label">GoDaddy API</span><span class="value">Secured - ask Dylan</span></div>
-<div class="kv"><span class="label">GoDaddy Secret</span><span class="value">Secured - ask Dylan</span></div>
+<div class="kv"><span class="label">GoDaddy API Key</span><span class="value"><span class="secret" onclick="this.classList.toggle('revealed')"><span class="hidden">click to reveal</span><span class="shown">AZx6Gonn12c_KzndMn6DTL1tY6hN2bS852</span></span></span></div>
+<div class="kv"><span class="label">GoDaddy Secret</span><span class="value"><span class="secret" onclick="this.classList.toggle('revealed')"><span class="hidden">click to reveal</span><span class="shown">Mj2PHc3EiEKYJAuqgjx1Xd</span></span></span></div>
 <div class="kv"><span class="label">GHL Account</span><span class="value"><span class="badge badge-pending">Not signed up yet</span></span></div>
 <div class="kv"><span class="label">VAPI Assistant ID</span><span class="value" style="font-family:monospace;font-size:12px">278eb0d4-c3c3-4055-b377-798673a0e124</span></div>
 <div class="kv"><span class="label">VAPI Voice</span><span class="value">Priya (lxYfHSkYm1EzQzGhdbfc)</span></div>
@@ -90,35 +90,15 @@ a:hover{text-decoration:underline}
 <tr><td>Email Scripts + SOPs</td><td><span class="badge badge-done">Built</span></td><td><a href="email-agent-scripts-sops.html">email-agent-scripts-sops.html</a></td></tr>
 <tr><td>VAPI Voice Agent</td><td><span class="badge badge-live">Live</span></td><td>ID: 278eb0d4</td></tr>
 <tr><td>Mock Advisors in GHL</td><td><span class="badge badge-pending">21/50 loaded</span></td><td>GHL contacts tagged liftline-demo</td></tr>
-<tr><td>Master Agent Prompt</td><td><span class="badge badge-done">Built</span></td><td><a href="master-agent-prompt.md">master-agent-prompt.md</a> (duplicatable per company)</td></tr>
-<tr><td>Email Scheduling Workflow</td><td><span class="badge badge-pending">In progress</span></td><td>GHL automation + Outlook sync</td></tr>
-<tr><td>Calendar Integration</td><td><span class="badge badge-pending">Planned</span></td><td>GHL native Outlook calendar sync (two-way)</td></tr>
-<tr><td>Daily Report System</td><td><span class="badge badge-todo">Next</span></td><td>EOD summary to wholesaler</td></tr>
-<tr><td>LiftlineAI.com Deploy</td><td><span class="badge badge-pending">Domain ready</span></td><td>LiftlineAI.com (GoDaddy API connected)</td></tr>
-<tr><td>Salesforce Data Import</td><td><span class="badge badge-pending">CSV import</span></td><td>One-time import, GHL becomes live system. Direct API = Phase 2</td></tr>
+<tr><td>Email Scheduling Workflow</td><td><span class="badge badge-todo">Not started</span></td><td>-</td></tr>
+<tr><td>Google Calendar Integration</td><td><span class="badge badge-todo">Not started</span></td><td>-</td></tr>
+<tr><td>Daily Report System</td><td><span class="badge badge-todo">Not started</span></td><td>-</td></tr>
+<tr><td>Wholesaler Dashboard (GHL)</td><td><span class="badge badge-todo">Not started</span></td><td>-</td></tr>
+<tr><td>LiftlineAI.com Deploy</td><td><span class="badge badge-todo">Not started</span></td><td>Domain: LiftlineAI.com</td></tr>
+<tr><td>Salesforce Integration</td><td><span class="badge badge-todo">Phase 2</span></td><td>-</td></tr>
 <tr><td>Voice Notes to Salesforce</td><td><span class="badge badge-todo">Bonus add-on</span></td><td>-</td></tr>
 </tbody>
 </table>
-</div>
-
-<!-- HOW THE DATA FLOWS -->
-<div class="card card-full">
-<h2>How the System Tracks Everything (Salesforce Question Answered)</h2>
-<div class="notes">1. ONE-TIME IMPORT: Advisor list comes from Salesforce (CSV export). Names, emails, zones, tiers, last meeting date. Loaded into LiftlineAI system.
-
-2. FROM THAT POINT FORWARD, LIFTLINEAI IS THE LIVE SYSTEM. The AI sends all emails, handles all responses, books all meetings, tracks everything. It knows who had a meeting because IT scheduled it.
-
-3. OUTLOOK CALENDAR SYNC: Two-way. If the wholesaler books something manually (calls an advisor, bumps into them at conference), it shows up in Outlook, syncs to the system, AI sees it.
-
-4. PERIODIC REFRESH: Once a month/quarter, re-import CSV from Salesforce to catch new advisors, tier changes, zone reassignments. AI merges with existing tracking.
-
-5. DAILY REPORT: End of each day, wholesaler gets full summary - new bookings, changes, tomorrow's schedule with drive route, action items.
-
-SALESFORCE = THE ADDRESS BOOK (where advisors live)
-LIFTLINEAI = THE BRAIN (manages the entire scheduling pipeline)
-OUTLOOK = THE COMMUNICATION LAYER (email + calendar, FINRA compliant)
-
-Direct Salesforce API integration = Phase 2, after first paying client and compliance certification.</div>
 </div>
 
 <!-- PROGRESS -->
@@ -137,12 +117,12 @@ Direct Salesforce API integration = Phase 2, after first paying client and compl
 <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
 </div>
 <div style="margin-bottom:16px">
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Email Scheduling System</span><span>30%</span></div>
-<div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Email Scheduling System</span><span>15%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
 </div>
 <div>
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Deployment</span><span>20%</span></div>
-<div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Deployment</span><span>0%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
 </div>
 </div>
 

@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advisor Email Agent - Scripts, SOPs & System Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: #e2e8f0;
+            background: #0f1117;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #1a1f35 0%, #0d1025 100%);
+            border-bottom: 1px solid rgba(99, 130, 255, 0.15);
+            padding: 48px 0 40px;
+            text-align: center;
+        }
+
+        header .badge {
+            display: inline-block;
+            background: rgba(99, 130, 255, 0.12);
+            border: 1px solid rgba(99, 130, 255, 0.25);
+            color: #8ba3ff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        header p.subtitle {
+            font-size: 1.1rem;
+            color: #8892b0;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        header .meta-line {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #4a5580;
+        }
+
+        /* NAVIGATION */
+        .nav-bar {
+            background: #141824;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-inner::-webkit-scrollbar {
+            height: 0;
+        }
+
+        .nav-inner a {
+            color: #7a839e;
+            text-decoration: none;
+            padding: 14px 16px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .nav-inner a:hover,
+        .nav-inner a:focus {
+            color: #c5cee8;
+            border-bottom-color: rgba(99, 130, 255, 0.4);
+        }
+
+        /* MAIN CONTENT */
+        main {
+            padding: 48px 0 80px;
+        }
+
+        /* SECTIONS */
+        .section {
+            margin-bottom: 64px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .section-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .section-icon.blue { background: rgba(99, 130, 255, 0.12); }
+        .section-icon.blue svg { color: #6382ff; }
+        .section-icon.green { background: rgba(52, 211, 153, 0.12); }
+        .section-icon.green svg { color: #34d399; }
+        .section-icon.purple { background: rgba(167, 139, 250, 0.12); }
+        .section-icon.purple svg { color: #a78bfa; }
+        .section-icon.amber { background: rgba(251, 191, 36, 0.12); }
+        .section-icon.amber svg { color: #fbbf24; }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .section-header .section-num {
+            font-size: 0.75rem;
+            color: #4a5580;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            display: block;
+        }
+
+        /* CARDS */
+        .card {
+            background: #181d2e;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 28px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .card-header .tag {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 3px 10px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        .tag-a { background: rgba(52,211,153,0.12); color: #34d399; }
+        .tag-b { background: rgba(99,130,255,0.12); color: #6382ff; }
+        .tag-c { background: rgba(251,191,36,0.12); color: #fbbf24; }
+        .tag-d { background: rgba(244,114,182,0.12); color: #f472b6; }
+        .tag-e { background: rgba(167,139,250,0.12); color: #a78bfa; }
+        .tag-f { background: rgba(56,189,248,0.12); color: #38bdf8; }
+        .tag-g { background: rgba(251,146,60,0.12); color: #fb923c; }
+
+        .card-body {
+            padding: 24px 28px 28px;
+        }
+
+        /* SUBJECT LINES */
+        .subject-lines {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .subject-lines li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 0.92rem;
+        }
+
+        .subject-lines li:last-child {
+            border-bottom: none;
+        }
+
+        .subject-num {
+            background: rgba(99, 130, 255, 0.1);
+            color: #8ba3ff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .subject-text {
+            color: #c5cee8;
+            font-style: italic;
+        }
+
+        /* EMAIL TEMPLATE */
+        .email-template {
+            background: #0f1320;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 24px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #a8b4cc;
+        }
+
+        .email-template .var {
+            color: #6382ff;
+            font-weight: 500;
+            background: rgba(99,130,255,0.08);
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        .email-template .greeting {
+            margin-bottom: 16px;
+        }
+
+        .email-template .body-para {
+            margin-bottom: 14px;
+        }
+
+        .email-template .sign-off {
+            margin-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 16px;
+            color: #7a839e;
+        }
+
+        .template-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #4a5580;
+            margin-bottom: 12px;
+        }
+
+        /* FOLLOW-UP SEQUENCE */
+        .sequence {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sequence-step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .sequence-marker {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .sequence-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .sequence-dot.d3 { background: rgba(99,130,255,0.2); color: #8ba3ff; }
+        .sequence-dot.d7 { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        .sequence-dot.d14 { background: rgba(244,114,182,0.2); color: #f472b6; }
+
+        .sequence-line {
+            width: 2px;
+            height: 24px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .sequence-content {
+            flex: 1;
+            padding-top: 4px;
+        }
+
+        .sequence-content h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #c5cee8;
+            margin-bottom: 4px;
+        }
+
+        .sequence-content p {
+            font-size: 0.85rem;
+            color: #7a839e;
+        }
+
+        /* SOP BLOCKS */
+        .sop-block {
+            background: #181d2e;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .sop-header {
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .sop-number {
+            background: rgba(99, 130, 255, 0.1);
+            color: #8ba3ff;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .sop-header h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .sop-body {
+            padding: 24px 28px 28px;
+        }
+
+        .sop-body h4 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: #c5cee8;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .sop-body h4:first-child {
+            margin-top: 0;
+        }
+
+        .sop-body p {
+            font-size: 0.9rem;
+            color: #8892b0;
+            margin-bottom: 10px;
+        }
+
+        .sop-body ul, .sop-body ol {
+            margin: 8px 0 16px 20px;
+            font-size: 0.88rem;
+            color: #8892b0;
+        }
+
+        .sop-body li {
+            margin-bottom: 6px;
+        }
+
+        /* TIER TABLE */
+        .tier-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88rem;
+        }
+
+        .tier-table th {
+            background: rgba(99, 130, 255, 0.06);
+            color: #8ba3ff;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .tier-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: #a8b4cc;
+        }
+
+        .tier-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .tier-a { background: rgba(52,211,153,0.12); color: #34d399; }
+        .tier-b { background: rgba(99,130,255,0.12); color: #6382ff; }
+        .tier-c { background: rgba(251,191,36,0.12); color: #fbbf24; }
+        .tier-p { background: rgba(167,139,250,0.12); color: #a78bfa; }
+
+        /* ZONE CALENDAR */
+        .zone-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 16px 0;
+        }
+
+        .zone-cell {
+            background: rgba(99, 130, 255, 0.04);
+            border: 1px solid rgba(99, 130, 255, 0.1);
+            border-radius: 8px;
+            padding: 14px 12px;
+            text-align: center;
+        }
+
+        .zone-cell.active {
+            background: rgba(99, 130, 255, 0.12);
+            border-color: rgba(99, 130, 255, 0.3);
+        }
+
+        .zone-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #4a5580;
+            margin-bottom: 4px;
+        }
+
+        .zone-cell.active .zone-label {
+            color: #8ba3ff;
+        }
+
+        .zone-name {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #7a839e;
+        }
+
+        .zone-cell.active .zone-name {
+            color: #c5cee8;
+        }
+
+        .zone-week {
+            font-size: 0.72rem;
+            color: #4a5580;
+            margin-top: 4px;
+        }
+
+        .zone-cell.active .zone-week {
+            color: #6382ff;
+        }
+
+        /* DAILY WORKFLOW */
+        .workflow-timeline {
+            position: relative;
+            padding-left: 32px;
+            margin: 16px 0;
+        }
+
+        .workflow-timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            background: rgba(99, 130, 255, 0.15);
+        }
+
+        .workflow-step {
+            position: relative;
+            padding: 8px 0 20px 16px;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 14px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6382ff;
+            border: 2px solid #0f1117;
+        }
+
+        .workflow-step .time {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #6382ff;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .workflow-step .step-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #c5cee8;
+            margin: 2px 0;
+        }
+
+        .workflow-step .step-desc {
+            font-size: 0.84rem;
+            color: #7a839e;
+        }
+
+        /* ARCHITECTURE DIAGRAM */
+        .arch-diagram {
+            background: #0f1320;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 32px;
+            margin: 20px 0;
+        }
+
+        .arch-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .arch-node {
+            background: #181d2e;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 16px 20px;
+            text-align: center;
+            min-width: 140px;
+            flex-shrink: 0;
+        }
+
+        .arch-node.primary {
+            border-color: rgba(99, 130, 255, 0.3);
+            background: rgba(99, 130, 255, 0.06);
+        }
+
+        .arch-node .node-icon {
+            margin-bottom: 8px;
+        }
+
+        .arch-node .node-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .arch-node .node-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #c5cee8;
+        }
+
+        .arch-node .node-desc {
+            font-size: 0.72rem;
+            color: #5a6380;
+            margin-top: 2px;
+        }
+
+        .arch-arrow {
+            text-align: center;
+            padding: 4px 0;
+            color: #3a4060;
+        }
+
+        .arch-arrow svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* DATA FLOW */
+        .data-flow {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 24px 0;
+            padding: 20px;
+            background: rgba(99, 130, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(99, 130, 255, 0.08);
+        }
+
+        .flow-node {
+            background: #181d2e;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #8ba3ff;
+            white-space: nowrap;
+        }
+
+        .flow-arrow {
+            color: #3a4060;
+            font-size: 0.8rem;
+        }
+
+        .flow-arrow svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+        }
+
+        /* TIMELINE */
+        .impl-timeline {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .timeline-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+
+        .timeline-week {
+            width: 72px;
+            flex-shrink: 0;
+            text-align: right;
+            padding-top: 12px;
+        }
+
+        .timeline-week span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #4a5580;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-bar {
+            flex: 1;
+            background: #181d2e;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            padding: 14px 20px;
+        }
+
+        .timeline-bar h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #c5cee8;
+            margin-bottom: 4px;
+        }
+
+        .timeline-bar p {
+            font-size: 0.82rem;
+            color: #7a839e;
+        }
+
+        .timeline-bar.phase-1 { border-left: 3px solid #6382ff; }
+        .timeline-bar.phase-2 { border-left: 3px solid #34d399; }
+        .timeline-bar.phase-3 { border-left: 3px solid #fbbf24; }
+        .timeline-bar.phase-4 { border-left: 3px solid #a78bfa; }
+        .timeline-bar.phase-5 { border-left: 3px solid #f472b6; }
+
+        /* COMPLIANCE CALLOUT */
+        .callout {
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-size: 0.88rem;
+        }
+
+        .callout.warning {
+            background: rgba(251, 191, 36, 0.06);
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            color: #c9a634;
+        }
+
+        .callout.info {
+            background: rgba(99, 130, 255, 0.06);
+            border: 1px solid rgba(99, 130, 255, 0.15);
+            color: #8ba3ff;
+        }
+
+        .callout.success {
+            background: rgba(52, 211, 153, 0.06);
+            border: 1px solid rgba(52, 211, 153, 0.15);
+            color: #34d399;
+        }
+
+        .callout-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .callout-title svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* INPUT/OUTPUT BLOCK */
+        .io-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+        }
+
+        .io-panel {
+            background: #0f1320;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .io-panel-header {
+            padding: 10px 16px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .io-panel.input .io-panel-header {
+            background: rgba(251, 191, 36, 0.06);
+            color: #c9a634;
+        }
+
+        .io-panel.output .io-panel-header {
+            background: rgba(52, 211, 153, 0.06);
+            color: #34d399;
+        }
+
+        .io-panel-body {
+            padding: 16px;
+            font-size: 0.85rem;
+            color: #8892b0;
+            line-height: 1.7;
+        }
+
+        /* REPORT METRICS */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .metric-card {
+            background: #181d2e;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .metric-card .metric-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #4a5580;
+            margin-bottom: 4px;
+        }
+
+        .metric-card .metric-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #6382ff;
+        }
+
+        .metric-card .metric-desc {
+            font-size: 0.75rem;
+            color: #5a6380;
+            margin-top: 4px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #141824;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding: 32px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.78rem;
+            color: #3a4060;
+        }
+
+        footer .footer-brand {
+            color: #4a5580;
+            font-weight: 600;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.6rem; }
+            .zone-grid { grid-template-columns: repeat(3, 1fr); }
+            .io-block { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .arch-row { flex-direction: column; align-items: center; }
+            .data-flow { flex-direction: column; }
+            .nav-inner a { padding: 12px 12px; font-size: 0.78rem; }
+        }
+
+        /* CHECKLIST */
+        .checklist {
+            list-style: none;
+            margin: 8px 0;
+        }
+
+        .checklist li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 6px 0;
+            font-size: 0.88rem;
+            color: #8892b0;
+        }
+
+        .checklist li svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .check-ok { color: #34d399; }
+        .check-warn { color: #fbbf24; }
+        .check-critical { color: #f472b6; }
+
+        /* SALESFORCE FIELDS TABLE */
+        .fields-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.85rem;
+        }
+
+        .fields-table th {
+            background: rgba(99, 130, 255, 0.06);
+            color: #8ba3ff;
+            font-weight: 600;
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .fields-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            color: #a8b4cc;
+        }
+
+        .fields-table td code {
+            background: rgba(99,130,255,0.08);
+            color: #8ba3ff;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 0.82rem;
+        }
+
+        .print-only { display: none; }
+
+        @media print {
+            body { background: #fff; color: #1a1a1a; }
+            .nav-bar { display: none; }
+            .card, .sop-block { break-inside: avoid; }
+            .print-only { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ====== HEADER ====== -->
+<header>
+    <div class="container">
+        <div class="badge">Operations Playbook v1.0</div>
+        <h1>Advisor Email Agent</h1>
+        <p class="subtitle">Scripts, SOPs & System Architecture for AI-Powered Wholesale Scheduling</p>
+        <p class="meta-line">Confidential - Prepared by Elevated AI - March 2026</p>
+    </div>
+</header>
+
+<!-- ====== NAVIGATION ====== -->
+<nav class="nav-bar">
+    <div class="nav-inner">
+        <a href="#scripts">Email Scripts</a>
+        <a href="#sops">Standard Operating Procedures</a>
+        <a href="#architecture">System Architecture</a>
+        <a href="#timeline">Implementation Timeline</a>
+    </div>
+</nav>
+
+<!-- ====== MAIN ====== -->
+<main>
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: EMAIL SCRIPTS                                      -->
+<!-- ============================================================ -->
+<div class="section" id="scripts">
+    <div class="section-header">
+        <div class="section-icon blue">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+        </div>
+        <div>
+            <span class="section-num">Section 1</span>
+            <h2>Email Scripts</h2>
+        </div>
+    </div>
+
+    <!-- SCRIPT A -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script A - Top Tier Advisor (A Client)</h3>
+            <span class="tag tag-a">A Tier</span>
+        </div>
+        <div class="card-body">
+            <div class="template-label">Subject Line Variations</div>
+            <ul class="subject-lines">
+                <li>
+                    <span class="subject-num">1</span>
+                    <span class="subject-text">"Quick catch-up when I'm in <span class="var">[City]</span> on <span class="var">[Date range]</span>"</span>
+                </li>
+                <li>
+                    <span class="subject-num">2</span>
+                    <span class="subject-text">"<span class="var">[Wholesaler Name]</span> - in your area <span class="var">[Date]</span>, wanted to connect"</span>
+                </li>
+                <li>
+                    <span class="subject-num">3</span>
+                    <span class="subject-text">"15 minutes next <span class="var">[Day]</span>? Got some market thoughts to share"</span>
+                </li>
+            </ul>
+
+            <div class="template-label">Email Body</div>
+            <div class="email-template">
+                <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                <div class="body-para">Hope things are going well. <span class="var">[Wholesaler]</span> is going to be in <span class="var">[City]</span> the week of <span class="var">[Date]</span> and wanted to connect briefly.</div>
+                <div class="body-para">We've been seeing some interesting opportunities in <span class="var">[specific area - income strategies/international/municipal]</span> that I think are worth a quick conversation given what you've been focused on.</div>
+                <div class="body-para">Would <span class="var">[Day 1]</span> or <span class="var">[Day 2]</span> work better for you? Happy to come by your office or grab a quick coffee.</div>
+                <div class="body-para">Let me know what works.</div>
+                <div class="sign-off">
+                    Best,<br>
+                    <span class="var">[Assistant Name]</span><br>
+                    On behalf of <span class="var">[Wholesaler Name]</span><br>
+                    <span class="var">[Firm Name]</span>
+                </div>
+            </div>
+
+            <div class="callout info" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+                    Key: A-tier emails are personal and specific
+                </div>
+                Always reference a concrete topic area relevant to the advisor's current book. Use Broadridge FMAX data to identify recent fund flows and tailor the hook accordingly.
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT B -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script B - Mid Tier Advisor (B Client)</h3>
+            <span class="tag tag-b">B Tier</span>
+        </div>
+        <div class="card-body">
+            <div class="template-label">Subject Line Variations</div>
+            <ul class="subject-lines">
+                <li>
+                    <span class="subject-num">1</span>
+                    <span class="subject-text">"<span class="var">[Wholesaler Name]</span> visiting <span class="var">[City]</span> - worth 15 min?"</span>
+                </li>
+                <li>
+                    <span class="subject-num">2</span>
+                    <span class="subject-text">"In your area <span class="var">[Date range]</span> - quick market update"</span>
+                </li>
+                <li>
+                    <span class="subject-num">3</span>
+                    <span class="subject-text">"Checking in - <span class="var">[Wholesaler Name]</span> in <span class="var">[City]</span> next week"</span>
+                </li>
+            </ul>
+
+            <div class="template-label">Email Body</div>
+            <div class="email-template">
+                <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                <div class="body-para">Wanted to reach out - <span class="var">[Wholesaler]</span> will be in <span class="var">[City]</span> the week of <span class="var">[Date]</span> and would love to catch up if your schedule allows.</div>
+                <div class="body-para">We've been getting good feedback from advisors on some of our recent positioning around <span class="var">[broad topic - fixed income/multi-asset/tax-advantaged strategies]</span>, and thought it might be relevant to your practice.</div>
+                <div class="body-para">Would you have 15 minutes on <span class="var">[Day 1]</span> or <span class="var">[Day 2]</span>? Happy to work around your schedule.</div>
+                <div class="sign-off">
+                    Best,<br>
+                    <span class="var">[Assistant Name]</span><br>
+                    On behalf of <span class="var">[Wholesaler Name]</span><br>
+                    <span class="var">[Firm Name]</span>
+                </div>
+            </div>
+
+            <div class="callout info" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+                    Key: B-tier emails are warm but broader
+                </div>
+                Use general category-level hooks rather than specific fund or strategy names. The goal is to stay visible and maintain the relationship without over-investing prep time.
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT C -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script C - Newer Prospect</h3>
+            <span class="tag tag-c">Prospect</span>
+        </div>
+        <div class="card-body">
+            <div class="template-label">Subject Line Variations</div>
+            <ul class="subject-lines">
+                <li>
+                    <span class="subject-num">1</span>
+                    <span class="subject-text">"Quick intro - <span class="var">[Wholesaler Name]</span> with <span class="var">[Firm Name]</span>"</span>
+                </li>
+                <li>
+                    <span class="subject-num">2</span>
+                    <span class="subject-text">"Complimentary CE credits + market research - <span class="var">[Firm Name]</span>"</span>
+                </li>
+                <li>
+                    <span class="subject-num">3</span>
+                    <span class="subject-text">"Portfolio analysis for your practice - no strings attached"</span>
+                </li>
+            </ul>
+
+            <div class="template-label">Email Body</div>
+            <div class="email-template">
+                <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                <div class="body-para">I'm reaching out on behalf of <span class="var">[Wholesaler Name]</span>, a regional director with <span class="var">[Firm Name]</span> who covers the <span class="var">[Region/City]</span> area.</div>
+                <div class="body-para">We work with financial advisors to provide institutional-level research, portfolio construction support, and continuing education opportunities - all at no cost. Our goal is to be a resource for your practice, whether or not our strategies end up being a fit right now.</div>
+                <div class="body-para">A few things we can offer on an introductory basis:</div>
+                <div class="body-para" style="padding-left: 12px;">
+                    - Complimentary CE credit events (CFP, CIMA, CPWA approved)<br>
+                    - Custom portfolio analysis and stress testing<br>
+                    - Market research and white papers on current macro themes<br>
+                    - Practice management resources
+                </div>
+                <div class="body-para"><span class="var">[Wholesaler]</span> will be in <span class="var">[City]</span> on <span class="var">[Date range]</span>. Would you have 15-20 minutes for a brief introduction? No pitch - just a chance to learn about your practice and see if we can be useful.</div>
+                <div class="sign-off">
+                    Best,<br>
+                    <span class="var">[Assistant Name]</span><br>
+                    On behalf of <span class="var">[Wholesaler Name]</span><br>
+                    <span class="var">[Firm Name]</span>
+                </div>
+            </div>
+
+            <div class="callout success" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Key: Lead with value, not product
+                </div>
+                Prospects need to understand what you bring to the table before they care about your strategies. CE credits and free research are the door openers. Always position as "resource" first.
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT D -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script D - Follow-Up Sequence (No Response)</h3>
+            <span class="tag tag-d">Follow-Up</span>
+        </div>
+        <div class="card-body">
+            <div class="template-label">3-Touch Follow-Up Sequence</div>
+
+            <div class="sequence">
+                <!-- Touch 1: Day 3 -->
+                <div class="sequence-step">
+                    <div class="sequence-marker">
+                        <div class="sequence-dot d3">D3</div>
+                        <div class="sequence-line"></div>
+                    </div>
+                    <div class="sequence-content">
+                        <h4>Touch 1 - Day 3</h4>
+                        <p style="margin-bottom: 8px; color: #5a6380; font-size: 0.78rem;">Subject: "Re: [Original Subject]"</p>
+                        <div class="email-template" style="font-size: 0.85rem;">
+                            <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                            <div class="body-para">Just wanted to bump this up in your inbox. <span class="var">[Wholesaler]</span> has a couple of open slots on <span class="var">[Day 1]</span> and <span class="var">[Day 2]</span> if either works.</div>
+                            <div class="body-para">No worries if the timing doesn't work this rotation - happy to plan for next time through.</div>
+                            <div class="sign-off">
+                                <span class="var">[Assistant Name]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Touch 2: Day 7 -->
+                <div class="sequence-step">
+                    <div class="sequence-marker">
+                        <div class="sequence-dot d7">D7</div>
+                        <div class="sequence-line"></div>
+                    </div>
+                    <div class="sequence-content">
+                        <h4>Touch 2 - Day 7</h4>
+                        <p style="margin-bottom: 8px; color: #5a6380; font-size: 0.78rem;">Subject: "Quick question, [Advisor First Name]"</p>
+                        <div class="email-template" style="font-size: 0.85rem;">
+                            <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                            <div class="body-para">Totally understand if this week doesn't work. Would a phone call be easier than an in-person? <span class="var">[Wholesaler]</span> is happy to do a quick 10-minute call instead.</div>
+                            <div class="body-para">Just let me know.</div>
+                            <div class="sign-off">
+                                <span class="var">[Assistant Name]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Touch 3: Day 14 -->
+                <div class="sequence-step">
+                    <div class="sequence-marker">
+                        <div class="sequence-dot d14">D14</div>
+                    </div>
+                    <div class="sequence-content">
+                        <h4>Touch 3 - Day 14 (Final)</h4>
+                        <p style="margin-bottom: 8px; color: #5a6380; font-size: 0.78rem;">Subject: "Closing the loop"</p>
+                        <div class="email-template" style="font-size: 0.85rem;">
+                            <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                            <div class="body-para">Don't want to clutter your inbox. I'll plan to reach out next time <span class="var">[Wholesaler]</span> is in <span class="var">[City]</span>. In the meantime, feel free to reach out if anything comes up.</div>
+                            <div class="sign-off">
+                                Best,<br>
+                                <span class="var">[Assistant Name]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout warning" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+                    Rule: Never send more than 3 follow-ups
+                </div>
+                After Touch 3, the advisor goes back into the rotation queue for the next zone visit. Sending additional follow-ups damages the relationship and violates best practices. Log the non-response in Salesforce.
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT E -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script E - Meeting Confirmation (24 Hours Prior)</h3>
+            <span class="tag tag-e">Confirmation</span>
+        </div>
+        <div class="card-body">
+            <div class="template-label">Subject Line</div>
+            <ul class="subject-lines">
+                <li>
+                    <span class="subject-num">1</span>
+                    <span class="subject-text">"Confirming tomorrow - <span class="var">[Wholesaler Name]</span> at <span class="var">[Time]</span>"</span>
+                </li>
+            </ul>
+
+            <div class="template-label">Email Body</div>
+            <div class="email-template">
+                <div class="greeting">Hi <span class="var">[Advisor Name]</span>,</div>
+                <div class="body-para">Just confirming your meeting with <span class="var">[Wholesaler Name]</span> tomorrow:</div>
+                <div class="body-para" style="padding-left: 12px; border-left: 2px solid rgba(99,130,255,0.2);">
+                    <strong style="color: #c5cee8;">Date:</strong> <span class="var">[Day, Month Date]</span><br>
+                    <strong style="color: #c5cee8;">Time:</strong> <span class="var">[Time]</span><br>
+                    <strong style="color: #c5cee8;">Location:</strong> <span class="var">[Office address / Coffee shop / Virtual link]</span><br>
+                    <strong style="color: #c5cee8;">What to expect:</strong> Brief market update on <span class="var">[topic area]</span> and an open discussion on how we can support your practice.
+                </div>
+                <div class="body-para">If anything has changed, just reply to this email or call me at <span class="var">[Phone]</span> and we'll adjust.</div>
+                <div class="body-para">Looking forward to it.</div>
+                <div class="sign-off">
+                    Best,<br>
+                    <span class="var">[Assistant Name]</span><br>
+                    On behalf of <span class="var">[Wholesaler Name]</span><br>
+                    <span class="var">[Firm Name]</span>
+                </div>
+            </div>
+
+            <div class="callout info" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+                    VAPI Voice Confirmation (Optional)
+                </div>
+                If VAPI voice calls are enabled, the system will place a brief confirmation call 2-3 hours after this email is sent. The voice agent confirms time, location, and asks if the advisor needs to adjust. Results are synced back to Salesforce and the calendar.
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT F -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script F - Post-Meeting Follow-Up (Voice Note to Email)</h3>
+            <span class="tag tag-f">Post-Meeting</span>
+        </div>
+        <div class="card-body">
+            <p style="color: #8892b0; font-size: 0.9rem; margin-bottom: 20px;">The wholesaler records a quick voice note after each meeting. The AI processes the audio, extracts key details, and generates a personalized follow-up email.</p>
+
+            <div class="io-block">
+                <div class="io-panel input">
+                    <div class="io-panel-header">Input - Wholesaler Voice Note</div>
+                    <div class="io-panel-body">
+                        <em style="color: #7a839e;">"Just left Mike Chen's office. Great meeting. We talked about his concerns around duration risk in his fixed income sleeve - he's got about 40% in long-duration treasuries. I showed him our short-duration municipal strategy and he was really interested. He wants to see a comparison of our muni fund vs what he's currently using. Also mentioned his daughter is starting at Stanford in the fall, so congrats on that. He's open to a follow-up call in two weeks once he's reviewed the materials."</em>
+                    </div>
+                </div>
+                <div class="io-panel output">
+                    <div class="io-panel-header">Output - Generated Email</div>
+                    <div class="io-panel-body">
+                        <strong style="color: #c5cee8;">Subject:</strong> Great catching up today - duration analysis to follow<br><br>
+                        Hi Mike,<br><br>
+                        Really enjoyed our conversation today. Congratulations on your daughter heading to Stanford this fall - that's a huge accomplishment.<br><br>
+                        Per our discussion on the duration exposure in your fixed income allocation, I'm putting together a side-by-side comparison of our short-duration municipal strategy against your current positioning. I'll have that over to you by end of week.<br><br>
+                        Let's plan to reconnect the week of <span class="var">[Date + 2 weeks]</span> once you've had a chance to review. I'll send a calendar invite.<br><br>
+                        Thanks again for making the time.<br><br>
+                        Best,<br>
+                        <span class="var">[Wholesaler Name]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout success" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    AI extracts 4 things from every voice note
+                </div>
+                1. Personal details to reference (builds relationship)<br>
+                2. Specific investment topics discussed (shows attentiveness)<br>
+                3. Action items and next steps (drives follow-through)<br>
+                4. Suggested follow-up timeline (keeps pipeline moving)
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT G -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Script G - Rescheduling Handler</h3>
+            <span class="tag tag-g">Reschedule</span>
+        </div>
+        <div class="card-body">
+            <p style="color: #8892b0; font-size: 0.9rem; margin-bottom: 20px;">When an advisor replies with "can't make it," "need to move this," or similar language, the AI detects the intent and handles rescheduling automatically.</p>
+
+            <div class="io-block">
+                <div class="io-panel input">
+                    <div class="io-panel-header">Input - Advisor Reply</div>
+                    <div class="io-panel-body">
+                        <em style="color: #7a839e;">"Hey, something came up with a client emergency. Can we push this to later in the week?"</em>
+                    </div>
+                </div>
+                <div class="io-panel output">
+                    <div class="io-panel-header">Output - Auto-Generated Response</div>
+                    <div class="io-panel-body">
+                        Hi <span class="var">[Advisor Name]</span>,<br><br>
+                        No problem at all - client always comes first. Let me grab a couple of options for later this week:<br><br>
+                        - <span class="var">[Day 1]</span> at <span class="var">[Time A]</span> or <span class="var">[Time B]</span><br>
+                        - <span class="var">[Day 2]</span> at <span class="var">[Time A]</span> or <span class="var">[Time B]</span><br><br>
+                        Or if next week works better, <span class="var">[Wholesaler]</span> can do a quick phone call. Whatever's easiest for you.<br><br>
+                        <span class="var">[Assistant Name]</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout info" style="margin-top: 20px;">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" /></svg>
+                    Rescheduling Rules
+                </div>
+                The system offers alternatives from the same zone visit window first. If no slots are available in that rotation, it offers a phone call as a bridge. The original calendar slot is freed up immediately and offered to the next advisor in the priority queue. Max 2 reschedule attempts per meeting before it's logged as a cancellation.
+            </div>
+        </div>
+    </div>
+
+</div><!-- /section scripts -->
+
+
+<!-- ============================================================ -->
+<!-- SECTION 2: STANDARD OPERATING PROCEDURES                      -->
+<!-- ============================================================ -->
+<div class="section" id="sops">
+    <div class="section-header">
+        <div class="section-icon green">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" /></svg>
+        </div>
+        <div>
+            <span class="section-num">Section 2</span>
+            <h2>Standard Operating Procedures</h2>
+        </div>
+    </div>
+
+    <!-- SOP 1: Zone Rotation -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 1</span>
+            <h3>Zone Rotation Scheduling</h3>
+        </div>
+        <div class="sop-body">
+            <h4>How the 5-Zone System Works</h4>
+            <p>Each wholesaler's territory is divided into 5 geographic zones. The wholesaler rotates through one zone per week on a repeating cycle. This creates predictable travel patterns, reduces windshield time, and ensures every part of the territory gets consistent coverage.</p>
+
+            <h4>Zone Calendar Visualization</h4>
+            <div class="zone-grid">
+                <div class="zone-cell">
+                    <div class="zone-label">Week 1</div>
+                    <div class="zone-name">Zone A</div>
+                    <div class="zone-week">Downtown / Metro</div>
+                </div>
+                <div class="zone-cell active">
+                    <div class="zone-label">Week 2</div>
+                    <div class="zone-name">Zone B</div>
+                    <div class="zone-week">North Suburbs</div>
+                </div>
+                <div class="zone-cell">
+                    <div class="zone-label">Week 3</div>
+                    <div class="zone-name">Zone C</div>
+                    <div class="zone-week">South / Coastal</div>
+                </div>
+                <div class="zone-cell">
+                    <div class="zone-label">Week 4</div>
+                    <div class="zone-name">Zone D</div>
+                    <div class="zone-week">East Region</div>
+                </div>
+                <div class="zone-cell">
+                    <div class="zone-label">Week 5</div>
+                    <div class="zone-name">Zone E</div>
+                    <div class="zone-week">West / Outlying</div>
+                </div>
+            </div>
+
+            <h4>Scheduling Window</h4>
+            <p>The active scheduling window is 2 weeks out from the target zone visit. This gives advisors enough notice without being so far ahead that schedules change.</p>
+            <ul>
+                <li><strong>Week -2:</strong> AI begins outreach to advisors in the target zone (A-tier first)</li>
+                <li><strong>Week -1:</strong> Follow-up sequence for non-responders; B and C tier outreach begins</li>
+                <li><strong>Target Week:</strong> Meetings execute; last-minute fills from prospect list</li>
+                <li><strong>Week +1:</strong> Post-meeting follow-ups sent; data logged in Salesforce</li>
+            </ul>
+
+            <h4>Zone Assignment Logic</h4>
+            <p>Advisors are assigned to zones based on their primary office location. The system uses the office ZIP code from Salesforce and maps it to the nearest zone. Advisors with multiple office locations are assigned to the zone where they spend the most days per week (tracked via Salesforce custom field).</p>
+        </div>
+    </div>
+
+    <!-- SOP 2: Advisor Prioritization -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 2</span>
+            <h3>Advisor Prioritization</h3>
+        </div>
+        <div class="sop-body">
+            <h4>Tier Definitions</h4>
+            <table class="tier-table">
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Definition</th>
+                        <th>Visit Frequency</th>
+                        <th>Scheduling Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tier-badge tier-a">A Tier</span></td>
+                        <td>Top 20% of book. Highest AUM and revenue. Strong existing relationship.</td>
+                        <td>Every rotation (every 5 weeks)</td>
+                        <td>Always first. Calendar slots reserved before any other outreach.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tier-badge tier-b">B Tier</span></td>
+                        <td>Solid relationships. Consistent but not top-tier production.</td>
+                        <td>Every other rotation or on request</td>
+                        <td>Second priority. Scheduled after A-tier slots are confirmed.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tier-badge tier-c">C Tier</span></td>
+                        <td>Smaller accounts or newer relationships. Growth potential.</td>
+                        <td>Quarterly or to fill calendar gaps</td>
+                        <td>Third priority. Used to fill open time slots within the zone.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="tier-badge tier-p">Prospect</span></td>
+                        <td>No existing relationship. Identified through Broadridge data or referrals.</td>
+                        <td>1-2 per week maximum</td>
+                        <td>Lowest priority. Never displaces an existing relationship.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Tier Movement Rules</h4>
+            <ul>
+                <li><strong>Promotion (C to B, B to A):</strong> Based on trailing 12-month revenue growth, meeting engagement rate, and wholesaler recommendation. Reviewed quarterly.</li>
+                <li><strong>Demotion (A to B, B to C):</strong> Triggered by 2 consecutive rotation no-shows without rescheduling, significant AUM decline, or advisor request for reduced contact.</li>
+                <li><strong>Prospect to C:</strong> Automatic after first successful in-person meeting and any fund flow activity within 90 days.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SOP 3: Daily Scheduling Workflow -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 3</span>
+            <h3>Daily Scheduling Workflow</h3>
+        </div>
+        <div class="sop-body">
+            <div class="workflow-timeline">
+                <div class="workflow-step">
+                    <div class="time">7:00 AM - Morning Check</div>
+                    <div class="step-title">Calendar Gap Analysis</div>
+                    <div class="step-desc">System scans the calendar 2 weeks out. Identifies open slots in the target zone for that rotation.</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="time">7:15 AM - Advisor Selection</div>
+                    <div class="step-title">Pull Advisor List for Target Zone</div>
+                    <div class="step-desc">Query Salesforce for all advisors assigned to the target zone. Sort by tier (A first, then B, then C, then Prospect).</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="time">7:30 AM - Geographic Clustering</div>
+                    <div class="step-title">Optimize by Location</div>
+                    <div class="step-desc">Group advisors by office proximity. Schedule meetings that are geographically close back-to-back to minimize drive time.</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="time">8:00 AM - Outreach</div>
+                    <div class="step-title">Send Scheduling Emails</div>
+                    <div class="step-desc">Deploy appropriate script (A, B, C, or Prospect) via Outlook. Personalize with Salesforce data and Broadridge intel.</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="time">10:00 AM - 4:00 PM - Response Processing</div>
+                    <div class="step-title">Process Replies</div>
+                    <div class="step-desc">Monitor inbox for responses. Auto-classify as: confirmed, needs rescheduling, declined, or out of office. Update calendar and Salesforce in real-time.</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="time">4:30 PM - Conflict Resolution</div>
+                    <div class="step-title">Resolve Scheduling Conflicts</div>
+                    <div class="step-desc">Flag any double-bookings or geographic impossibilities (meetings too far apart with insufficient travel time). Propose alternatives.</div>
+                </div>
+                <div class="workflow-step">
+                    <div class="time">5:00 PM - Evening Summary</div>
+                    <div class="step-title">Daily Report to Wholesaler</div>
+                    <div class="step-desc">Send summary: meetings confirmed, pending responses, follow-ups needed, calendar status for the target week. Include any tier changes or notable advisor activity.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SOP 4: Compliance Protocol -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 4</span>
+            <h3>Compliance Protocol</h3>
+        </div>
+        <div class="sop-body">
+            <div class="callout warning">
+                <div class="callout-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+                    FINRA/SEC Compliance is Non-Negotiable
+                </div>
+                Every email template must be reviewed and approved by the firm's compliance department before deployment. No exceptions.
+            </div>
+
+            <h4>Email Channel Requirements</h4>
+            <ul>
+                <li>All outbound emails must be sent through the firm's Microsoft 365 / Outlook system (FINRA requirement for archival and supervision)</li>
+                <li>No personal email, Gmail, or third-party email tools for advisor communications</li>
+                <li>All emails are automatically captured by the firm's archival system (Smarsh or Global Relay)</li>
+            </ul>
+
+            <h4>Content Restrictions</h4>
+            <ul>
+                <li>No performance claims, past returns, or projected returns in any email</li>
+                <li>No guarantees or promises about investment outcomes</li>
+                <li>No comparison to competitor products unless pre-approved by compliance</li>
+                <li>No forward-looking statements about market performance</li>
+                <li>Standard firm disclaimer appended to all outgoing messages automatically</li>
+            </ul>
+
+            <h4>Audit Trail</h4>
+            <ul>
+                <li>Every email sent is logged in Salesforce with: timestamp, template used, advisor tier, zone, and response status</li>
+                <li>Full conversation threads are preserved and searchable</li>
+                <li>Monthly compliance report generated showing all advisor touchpoints</li>
+                <li>Template version history maintained - every edit tracked with approval date</li>
+            </ul>
+
+            <h4>Pre-Deployment Checklist</h4>
+            <ul class="checklist">
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="check-ok"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    All templates reviewed by compliance team
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="check-ok"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Standard disclaimers configured in Outlook signature
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="check-ok"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Archival system (Smarsh/Global Relay) capturing AI-sent emails
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="check-ok"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    No performance data or guarantees in any template
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="check-ok"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Salesforce logging verified for all email events
+                </li>
+                <li>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="check-ok"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Supervisor review workflow enabled in Outlook
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SOP 5: Salesforce Integration -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 5</span>
+            <h3>Salesforce Integration</h3>
+        </div>
+        <div class="sop-body">
+            <h4>Data Sync Overview</h4>
+            <p>Salesforce is the single source of truth for all advisor data. The email agent reads from and writes to Salesforce in real-time. No advisor data is stored outside of Salesforce.</p>
+
+            <h4>Custom Fields Required</h4>
+            <table class="fields-table">
+                <thead>
+                    <tr>
+                        <th>Field Name</th>
+                        <th>API Name</th>
+                        <th>Type</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Zone Assignment</td>
+                        <td><code>Zone__c</code></td>
+                        <td>Picklist</td>
+                        <td>Which geographic zone the advisor belongs to (A-E)</td>
+                    </tr>
+                    <tr>
+                        <td>Advisor Tier</td>
+                        <td><code>Tier__c</code></td>
+                        <td>Picklist</td>
+                        <td>A, B, C, or Prospect classification</td>
+                    </tr>
+                    <tr>
+                        <td>Last Contact Date</td>
+                        <td><code>Last_Contact__c</code></td>
+                        <td>Date</td>
+                        <td>Date of most recent touchpoint (email, call, or meeting)</td>
+                    </tr>
+                    <tr>
+                        <td>Preferred Meeting Type</td>
+                        <td><code>Preferred_Meeting__c</code></td>
+                        <td>Picklist</td>
+                        <td>In-person, Phone, Virtual, or No Preference</td>
+                    </tr>
+                    <tr>
+                        <td>Office Location</td>
+                        <td><code>Office_Location__c</code></td>
+                        <td>Geolocation</td>
+                        <td>GPS coordinates for geographic clustering and zone assignment</td>
+                    </tr>
+                    <tr>
+                        <td>Last Meeting Date</td>
+                        <td><code>Last_Meeting__c</code></td>
+                        <td>Date</td>
+                        <td>Date of most recent in-person or virtual meeting</td>
+                    </tr>
+                    <tr>
+                        <td>Next Scheduled Meeting</td>
+                        <td><code>Next_Meeting__c</code></td>
+                        <td>Date/Time</td>
+                        <td>Upcoming confirmed meeting (if any)</td>
+                    </tr>
+                    <tr>
+                        <td>Follow-Up Stage</td>
+                        <td><code>Follow_Up_Stage__c</code></td>
+                        <td>Picklist</td>
+                        <td>None, Touch 1 Sent, Touch 2 Sent, Touch 3 Sent, Sequence Complete</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Broadridge FMAX Integration</h4>
+            <p>Broadridge FMAX data enriches advisor records with competitive intelligence:</p>
+            <ul>
+                <li><strong>Fund flows:</strong> Which fund families are gaining or losing assets with each advisor</li>
+                <li><strong>Competitive intel:</strong> Which competitor wholesalers are active with your advisors</li>
+                <li><strong>Product holdings:</strong> What the advisor currently owns - enables targeted conversation starters</li>
+                <li><strong>Activity trends:</strong> Trading frequency and product category preferences over time</li>
+            </ul>
+            <p>FMAX data syncs to Salesforce nightly and is used by the email agent to select the appropriate conversation hook for each script.</p>
+
+            <h4>Calendar Sync</h4>
+            <ul>
+                <li>Confirmed meetings are created as Salesforce Events linked to the Contact and the Zone</li>
+                <li>Outlook calendar entries are created simultaneously via Microsoft Graph API</li>
+                <li>Two-way sync: changes in either system propagate within 5 minutes</li>
+                <li>Meeting outcomes (completed, cancelled, rescheduled, no-show) are logged as Activity records</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SOP 6: Exception Handling -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 6</span>
+            <h3>Exception Handling</h3>
+        </div>
+        <div class="sop-body">
+            <h4>Advisor Out of Office (Extended)</h4>
+            <ul>
+                <li>If an auto-reply is detected, the advisor is paused from the current follow-up sequence</li>
+                <li>The return date (if included in the auto-reply) is logged in Salesforce</li>
+                <li>The advisor is re-queued for the next zone rotation after their return date</li>
+                <li>If no return date is detected, the advisor is flagged for manual review</li>
+            </ul>
+
+            <h4>Advisor Requests No Further Contact</h4>
+            <ul>
+                <li>Immediately cease all automated outreach</li>
+                <li>Update Salesforce: set <code>Do_Not_Contact__c</code> to TRUE</li>
+                <li>Notify the wholesaler directly - this requires a personal decision on how to handle</li>
+                <li>The advisor is excluded from all future automated scheduling until the flag is manually removed</li>
+            </ul>
+
+            <h4>Last-Minute Cancellation (Under 2 Hours)</h4>
+            <ul>
+                <li>System checks for C-tier advisors or prospects in the same geographic cluster</li>
+                <li>If a replacement is available, send an expedited outreach: "Had an opening this afternoon - any chance you're free?"</li>
+                <li>If no replacement is available, log the slot as "cancelled - unfilled" for reporting</li>
+                <li>Original advisor is offered first available slot in the next rotation</li>
+            </ul>
+
+            <h4>Double-Booking Conflicts</h4>
+            <ul>
+                <li>System checks for overlapping time + travel time between meetings</li>
+                <li>If a conflict is detected, the lower-tier advisor is offered an alternative time</li>
+                <li>If both advisors are the same tier, the one confirmed first keeps the slot</li>
+                <li>Wholesaler is notified of all conflict resolutions with the option to override</li>
+            </ul>
+
+            <h4>Wholesaler Sick or Traveling - Zone Pause</h4>
+            <ul>
+                <li>Wholesaler (or ops manager) triggers a zone pause via a single command or Salesforce status change</li>
+                <li>All pending outreach for the target zone is held (not deleted)</li>
+                <li>Confirmed meetings are sent a rescheduling email: "Unfortunately, [Wholesaler] needs to reschedule due to an unexpected conflict..."</li>
+                <li>When the pause is lifted, the system resumes from where it left off with updated dates</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SOP 7: Reporting -->
+    <div class="sop-block">
+        <div class="sop-header">
+            <span class="sop-number">SOP 7</span>
+            <h3>Reporting</h3>
+        </div>
+        <div class="sop-body">
+            <h4>Weekly Report</h4>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Meetings Booked</div>
+                    <div class="metric-value">--</div>
+                    <div class="metric-desc">Confirmed this week</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Show Rate</div>
+                    <div class="metric-value">--%</div>
+                    <div class="metric-desc">Confirmed that occurred</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Tier Distribution</div>
+                    <div class="metric-value">A/B/C</div>
+                    <div class="metric-desc">Mix of meetings by tier</div>
+                </div>
+            </div>
+            <p>Delivered every Friday at 5:00 PM to the wholesaler and ops manager. Includes: meetings booked vs target, show rate, cancellation reasons, response rates by script type, and upcoming week preview.</p>
+
+            <h4>Monthly Report</h4>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Territory Coverage</div>
+                    <div class="metric-value">--%</div>
+                    <div class="metric-desc">% of zones visited</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Advisor Engagement</div>
+                    <div class="metric-value">--%</div>
+                    <div class="metric-desc">Response rate to outreach</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Pipeline</div>
+                    <div class="metric-value">--</div>
+                    <div class="metric-desc">New prospects engaged</div>
+                </div>
+            </div>
+            <p>Delivered on the 1st of each month. Includes: territory coverage heat map, advisor engagement trends, A-tier meeting frequency, prospect conversion rate, and comparison to prior month.</p>
+
+            <h4>Quarterly Report</h4>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Hours Saved</div>
+                    <div class="metric-value">--</div>
+                    <div class="metric-desc">vs manual scheduling</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Revenue Impact</div>
+                    <div class="metric-value">$--</div>
+                    <div class="metric-desc">Attributed fund flows</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">ROI</div>
+                    <div class="metric-value">--x</div>
+                    <div class="metric-desc">System cost vs value</div>
+                </div>
+            </div>
+            <p>Delivered at quarter end. Executive summary format. Includes: total meetings facilitated, estimated hours saved (scheduling + admin), revenue attributed to meetings held, cost of system vs value generated, and advisor satisfaction metrics (if surveyed).</p>
+        </div>
+    </div>
+
+</div><!-- /section sops -->
+
+
+<!-- ============================================================ -->
+<!-- SECTION 3: SYSTEM ARCHITECTURE                                -->
+<!-- ============================================================ -->
+<div class="section" id="architecture">
+    <div class="section-header">
+        <div class="section-icon purple">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z" /></svg>
+        </div>
+        <div>
+            <span class="section-num">Section 3</span>
+            <h2>System Architecture</h2>
+        </div>
+    </div>
+
+    <h4 style="color: #8892b0; font-size: 0.9rem; margin-bottom: 24px;">The advisor email agent is built on five integrated platforms. Each component handles a specific responsibility in the scheduling pipeline.</h4>
+
+    <!-- Tech Stack -->
+    <div class="arch-diagram">
+        <div class="template-label" style="text-align: center; margin-bottom: 20px;">Core Technology Stack</div>
+        <div class="arch-row">
+            <div class="arch-node primary">
+                <div class="node-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6382ff"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>
+                </div>
+                <div class="node-name">Salesforce</div>
+                <div class="node-desc">Advisor Data + CRM</div>
+            </div>
+            <div class="arch-node primary">
+                <div class="node-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6382ff"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                </div>
+                <div class="node-name">Microsoft 365</div>
+                <div class="node-desc">Email + Calendar</div>
+            </div>
+            <div class="arch-node primary">
+                <div class="node-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6382ff"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" /></svg>
+                </div>
+                <div class="node-name">VAPI</div>
+                <div class="node-desc">Voice Confirmations</div>
+            </div>
+        </div>
+        <div class="arch-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" /></svg>
+        </div>
+        <div class="arch-row">
+            <div class="arch-node primary">
+                <div class="node-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6382ff"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
+                </div>
+                <div class="node-name">Claude AI</div>
+                <div class="node-desc">Intelligence Engine</div>
+            </div>
+            <div class="arch-node primary">
+                <div class="node-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#6382ff"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                </div>
+                <div class="node-name">GoHighLevel</div>
+                <div class="node-desc">Workflow Automation</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Flow -->
+    <div class="template-label" style="margin-top: 32px;">End-to-End Data Flow</div>
+    <div class="data-flow">
+        <div class="flow-node">Salesforce</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">Zone Engine</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">Claude AI</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">Outlook API</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">Calendar</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">VAPI</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">Post-Meeting</div>
+        <div class="flow-arrow"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></div>
+        <div class="flow-node">Salesforce Update</div>
+    </div>
+
+    <!-- Component Responsibilities -->
+    <div class="template-label" style="margin-top: 32px;">Component Responsibilities</div>
+
+    <div class="card" style="margin-top: 12px;">
+        <div class="card-body" style="padding: 0;">
+            <table class="tier-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Responsibility</th>
+                        <th>Integration Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong style="color: #c5cee8;">Salesforce</strong></td>
+                        <td>Source of truth for advisor data: contact info, tier, zone, meeting history, fund flows (via Broadridge FMAX sync)</td>
+                        <td>REST API + Bulk API for nightly sync</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #c5cee8;">Microsoft 365</strong></td>
+                        <td>Email delivery (Outlook) and calendar management. All emails sent through Outlook for FINRA compliance. Calendar entries synced bidirectionally.</td>
+                        <td>Microsoft Graph API</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #c5cee8;">VAPI</strong></td>
+                        <td>Automated voice confirmation calls 24 hours before meetings. Can also handle inbound rescheduling calls from advisors.</td>
+                        <td>VAPI SDK + Webhook callbacks</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #c5cee8;">Claude AI</strong></td>
+                        <td>Email generation engine (personalizes templates with Salesforce + Broadridge data), voice note processing (post-meeting), intent classification (reschedule, confirm, decline), and scheduling optimization.</td>
+                        <td>Anthropic API</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: #c5cee8;">GoHighLevel</strong></td>
+                        <td>Workflow orchestration: triggers email sequences, manages follow-up timing, handles webhook routing between systems, and serves as backup CRM for non-Salesforce firms.</td>
+                        <td>GHL API + Webhooks</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div><!-- /section architecture -->
+
+
+<!-- ============================================================ -->
+<!-- SECTION 4: IMPLEMENTATION TIMELINE                            -->
+<!-- ============================================================ -->
+<div class="section" id="timeline">
+    <div class="section-header">
+        <div class="section-icon amber">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+        </div>
+        <div>
+            <span class="section-num">Section 4</span>
+            <h2>Implementation Timeline</h2>
+        </div>
+    </div>
+
+    <p style="color: #8892b0; font-size: 0.9rem; margin-bottom: 24px;">Phased rollout over 7+ weeks. Each phase builds on the previous one. No phase is skipped. Compliance approval is a gate at the end of Week 2 - nothing goes live without it.</p>
+
+    <div class="impl-timeline">
+        <div class="timeline-row">
+            <div class="timeline-week"><span>Week 1</span></div>
+            <div class="timeline-bar phase-1">
+                <h4>Foundation - Salesforce Setup</h4>
+                <p>Configure custom fields (Zone, Tier, Last Contact, Preferred Meeting Type, Office Location). Import advisor data. Assign zones based on office ZIP codes. Set initial tier classifications using trailing 12-month revenue data. Validate Broadridge FMAX data feed.</p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="timeline-week"><span>Week 2</span></div>
+            <div class="timeline-bar phase-2">
+                <h4>Templates + Compliance</h4>
+                <p>Finalize all 7 email scripts (A through G). Submit to compliance for review. Configure Outlook integration via Microsoft Graph API. Set up email archival verification with Smarsh/Global Relay. Configure standard disclaimers. Get written compliance sign-off before proceeding.</p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="timeline-week"><span>Week 3</span></div>
+            <div class="timeline-bar phase-3">
+                <h4>Pilot Zone Launch</h4>
+                <p>Activate the system for one zone in one territory. A-tier advisors only for the first rotation. Monitor every email sent. Verify Salesforce logging, calendar sync, and archival. Daily check-ins with the wholesaler to gather feedback on tone and timing.</p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="timeline-week"><span>Week 4</span></div>
+            <div class="timeline-bar phase-4">
+                <h4>Voice Confirmation Activation</h4>
+                <p>Enable VAPI voice confirmation calls for the pilot zone. Test call flow: confirmation script, rescheduling handling, advisor intent detection. Verify callback data syncs to Salesforce and calendar. Fine-tune voice agent persona (professional, warm, not robotic).</p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="timeline-week"><span>Week 5-6</span></div>
+            <div class="timeline-bar phase-5">
+                <h4>Measure + Adjust</h4>
+                <p>Analyze pilot results: response rate, show rate, advisor feedback, compliance issues (if any). Adjust email copy, follow-up timing, and geographic clustering logic. Expand to B and C tier advisors in the pilot zone. Begin prospect outreach. Generate first weekly and monthly reports.</p>
+            </div>
+        </div>
+        <div class="timeline-row">
+            <div class="timeline-week"><span>Week 7+</span></div>
+            <div class="timeline-bar phase-1">
+                <h4>Multi-Territory Rollout</h4>
+                <p>Roll out to additional territories one at a time. Each new territory follows a compressed 2-week onboarding (data import + first zone activation). Scale to full 5-zone rotation per territory. Begin quarterly ROI reporting. Evaluate adding additional wholesalers to the system.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="callout success" style="margin-top: 32px;">
+        <div class="callout-title">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Success Criteria for Go/No-Go at Each Phase
+        </div>
+        <strong>Week 3 (Pilot):</strong> 80%+ of emails delivered successfully, zero compliance flags, Salesforce logging accurate.<br>
+        <strong>Week 4 (Voice):</strong> Voice calls completing without errors, 90%+ intent classification accuracy.<br>
+        <strong>Week 5-6 (Measure):</strong> Response rate above 25%, show rate above 75%, positive wholesaler feedback.<br>
+        <strong>Week 7+ (Scale):</strong> System stable with 2+ territories, reporting automated, no manual intervention needed for standard operations.
+    </div>
+</div><!-- /section timeline -->
+
+
+</div><!-- /container -->
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+    <div class="container">
+        <p><span class="footer-brand">Elevated AI</span> - Advisor Email Agent Operations Playbook v1.0</p>
+        <p style="margin-top: 6px;">Confidential. For internal operations use only. Not for distribution to advisors or external parties.</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -43,13 +43,25 @@ a:hover{text-decoration:underline}
 .check.done{background:var(--green);border-color:var(--green)}
 .check.done::after{content:'';width:6px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-2px}
 .notes{background:#1a1b22;border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--muted);margin-top:8px;white-space:pre-wrap}
-@media(max-width:600px){.grid{grid-template-columns:1fr}h1{font-size:22px}}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:#1a1b22;border-radius:8px;padding:12px;text-align:center}
+.stat .num{font-size:24px;font-weight:700;color:var(--green)}
+.stat .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.stat-grid{grid-template-columns:repeat(2,1fr)}h1{font-size:22px}}
 </style>
 </head>
 <body>
 
 <h1>Toney Sebra - LiftlineAI</h1>
-<p class="subtitle">Client Build Dashboard - Elevated AI Solutions | Last updated: March 26, 2026</p>
+<p class="subtitle">AI Powered Wholesaler Solutions | Last updated: March 28, 2026</p>
+
+<!-- LIVE STATS -->
+<div class="stat-grid">
+<div class="stat"><div class="num">50</div><div class="lbl">Contacts Loaded</div></div>
+<div class="stat"><div class="num">38</div><div class="lbl">Appointments</div></div>
+<div class="stat"><div class="num">20</div><div class="lbl">Emails Sent</div></div>
+<div class="stat"><div class="num">35%</div><div class="lbl">Response Rate</div></div>
+</div>
 
 <div class="grid">
 
@@ -57,119 +69,149 @@ a:hover{text-decoration:underline}
 <div class="card">
 <h2>Client Info</h2>
 <div class="kv"><span class="label">Name</span><span class="value">Toney Sebra</span></div>
-<div class="kv"><span class="label">Email</span><span class="value"><a href="mailto:toney@altawealthplans.com">toney@altawealthplans.com</a></span></div>
+<div class="kv"><span class="label">Email</span><span class="value"><a href="mailto:toney@liftlineai.com">toney@liftlineai.com</a></span></div>
+<div class="kv"><span class="label">Alt Email</span><span class="value">toney@altawealthplans.com</span></div>
 <div class="kv"><span class="label">WhatsApp</span><span class="value">+1 (916) 799-6114</span></div>
-<div class="kv"><span class="label">Business</span><span class="value">Alta Wealth Plans / LiftlineAI</span></div>
+<div class="kv"><span class="label">Business</span><span class="value">LiftlineAI (fka Alta Wealth Plans)</span></div>
 <div class="kv"><span class="label">Product</span><span class="value">AI Scheduling System for Wholesale Financial Reps</span></div>
-<div class="kv"><span class="label">Target Market</span><span class="value">Thornburg, Hartford, Franklin Templeton, Blue Owl</span></div>
 <div class="kv"><span class="label">Pricing Model</span><span class="value">$1,500/rep/month</span></div>
-<div class="kv"><span class="label">Revenue Share</span><span class="value">TBD - Dylan gets build fee + ~20%</span></div>
+<div class="kv"><span class="label">Revenue Share</span><span class="value">Dylan gets build fee + ~20%</span></div>
 <div class="kv"><span class="label">Freedom Code</span><span class="value">Beta tester #1 - The Fixer archetype</span></div>
+<div class="kv"><span class="label">Address</span><span class="value">2250 E Debeers Dr, Sandy, UT 84093</span></div>
 </div>
 
-<!-- CREDENTIALS -->
+<!-- GHL ACCOUNT -->
 <div class="card">
-<h2>Credentials / API Keys</h2>
-<div class="kv"><span class="label">GoDaddy Domain</span><span class="value">LiftlineAI.com</span></div>
-<div class="kv"><span class="label">GoDaddy API</span><span class="value">Secured - ask Dylan</span></div>
-<div class="kv"><span class="label">GoDaddy Secret</span><span class="value">Secured - ask Dylan</span></div>
-<div class="kv"><span class="label">GHL Account</span><span class="value"><span class="badge badge-pending">Not signed up yet</span></span></div>
-<div class="kv"><span class="label">VAPI Assistant ID</span><span class="value" style="font-family:monospace;font-size:12px">278eb0d4-c3c3-4055-b377-798673a0e124</span></div>
-<div class="kv"><span class="label">VAPI Voice</span><span class="value">Priya (lxYfHSkYm1EzQzGhdbfc)</span></div>
-<div class="kv"><span class="label">VAPI Phone</span><span class="value"><span class="badge badge-todo">No number assigned yet</span></span></div>
+<h2>GHL Account <span class="badge badge-live">LIVE</span></h2>
+<div class="kv"><span class="label">Location ID</span><span class="value" style="font-family:monospace;font-size:12px">[REDACTED]</span></div>
+<div class="kv"><span class="label">Company ID</span><span class="value" style="font-family:monospace;font-size:12px">[REDACTED]</span></div>
+<div class="kv"><span class="label">PIT Token</span><span class="value"><span class="secret" onclick="this.classList.toggle('revealed')"><span class="hidden">click to reveal</span><span class="shown">[REDACTED]</span></span></span></div>
+<div class="kv"><span class="label">User ID</span><span class="value" style="font-family:monospace;font-size:12px">[REDACTED]</span></div>
+<div class="kv"><span class="label">Calendar ID</span><span class="value" style="font-family:monospace;font-size:12px">[REDACTED]</span></div>
+<div class="kv"><span class="label">Email Service</span><span class="value"><span class="badge badge-live">LC Email (active)</span></span></div>
+<div class="kv"><span class="label">Timezone</span><span class="value">America/Denver (Mountain)</span></div>
+<div class="kv"><span class="label">Contacts</span><span class="value"><span class="badge badge-done">50/50 loaded</span></span></div>
+</div>
+
+<!-- DOMAIN / EXTERNAL -->
+<div class="card">
+<h2>Domain & External</h2>
+<div class="kv"><span class="label">Domain</span><span class="value">LiftlineAI.com (GoDaddy - parked)</span></div>
+<div class="kv"><span class="label">GoDaddy API Key</span><span class="value"><span class="secret" onclick="this.classList.toggle('revealed')"><span class="hidden">click to reveal</span><span class="shown">[REDACTED]</span></span></span></div>
+<div class="kv"><span class="label">GoDaddy Secret</span><span class="value"><span class="secret" onclick="this.classList.toggle('revealed')"><span class="hidden">click to reveal</span><span class="shown">[REDACTED]</span></span></span></div>
+<div class="kv"><span class="label">GitHub Pages</span><span class="value"><a href="https://dmanwadefreedom.github.io/liftlineai/">dmanwadefreedom.github.io/liftlineai</a></span></div>
+<div class="kv"><span class="label">Repo</span><span class="value"><a href="https://github.com/dmanwadefreedom/liftlineai">github.com/dmanwadefreedom/liftlineai</a></span></div>
+<div class="kv"><span class="label">VAPI Assistant</span><span class="value" style="font-family:monospace;font-size:12px">[REDACTED]</span></div>
+<div class="kv"><span class="label">VAPI Voice</span><span class="value">Priya (ElevenLabs)</span></div>
+<div class="kv"><span class="label">VAPI Phone</span><span class="value"><span class="badge badge-todo">Needs own number ($2/mo)</span></span></div>
+</div>
+
+<!-- ENGINE SYSTEM -->
+<div class="card">
+<h2>Scheduling Engine <span class="badge badge-live">LIVE</span></h2>
+<div class="kv"><span class="label">Engine</span><span class="value">liftline-engine.py</span></div>
+<div class="kv"><span class="label">Responder</span><span class="value">liftline-responder.py</span></div>
+<div class="kv"><span class="label">Autopilot</span><span class="value">liftline-autopilot.py</span></div>
+<div class="kv"><span class="label">Email Outreach</span><span class="value"><span class="badge badge-live">Working</span></span></div>
+<div class="kv"><span class="label">SMS Outreach</span><span class="value"><span class="badge badge-live">Working</span></span></div>
+<div class="kv"><span class="label">Response Handler</span><span class="value"><span class="badge badge-live">ACCEPT/DECLINE/OOO/RESCHEDULE</span></span></div>
+<div class="kv"><span class="label">Geo-Clustering</span><span class="value"><span class="badge badge-live">5 zones, drive-time optimized</span></span></div>
+<div class="kv"><span class="label">Smart Scheduling</span><span class="value"><span class="badge badge-live">A-tier AM, clustered, lunch blocked</span></span></div>
+<div class="kv"><span class="label">Daily Report</span><span class="value"><span class="badge badge-live">HTML email to owner</span></span></div>
+<div class="kv"><span class="label">Autopilot Mode</span><span class="value"><span class="badge badge-pending">Manual (needs cron for 8 AM auto)</span></span></div>
 </div>
 
 <!-- DELIVERABLES -->
-<div class="card">
+<div class="card card-full">
 <h2>Deliverables</h2>
 <table>
-<thead><tr><th>Asset</th><th>Status</th><th>Link</th></tr></thead>
+<thead><tr><th>Asset</th><th>Status</th><th>Detail</th></tr></thead>
 <tbody>
+<tr><td>50 Mock Advisors in GHL</td><td><span class="badge badge-done">Complete</span></td><td>5 zones, 4 tiers, all tagged, in Toney's GHL</td></tr>
+<tr><td>Smart Scheduling Engine</td><td><span class="badge badge-live">Live</span></td><td>3 scripts: engine + responder + autopilot</td></tr>
+<tr><td>Email + SMS Outreach</td><td><span class="badge badge-live">Tested</span></td><td>Tier-specific scripts, Toney's exact wording</td></tr>
+<tr><td>Response Handler</td><td><span class="badge badge-live">Live</span></td><td>Auto-classifies: Accept, Decline, OOO, Reschedule, Question</td></tr>
+<tr><td>GHL Calendar</td><td><span class="badge badge-done">Created</span></td><td>38 appointments populated, Mountain Time</td></tr>
+<tr><td>Daily EOD Report</td><td><span class="badge badge-live">Live</span></td><td>Styled HTML email to toney@liftlineai.com</td></tr>
+<tr><td>8 AM Autopilot</td><td><span class="badge badge-done">Built</span></td><td>Scan openings, fill smart, outreach, confirm, report</td></tr>
+<tr><td>Morning Run Simulation</td><td><span class="badge badge-done">Tested</span></td><td>5 cancellations, 8 fills, 3 re-booked, 24 confirmed</td></tr>
 <tr><td>Demo Landing Page</td><td><span class="badge badge-done">Built</span></td><td><a href="demo-landing-page.html">demo-landing-page.html</a></td></tr>
 <tr><td>System Overview / Pitch Deck</td><td><span class="badge badge-done">Built</span></td><td><a href="liftline-system-overview.html">liftline-system-overview.html</a></td></tr>
 <tr><td>Email Scripts + SOPs</td><td><span class="badge badge-done">Built</span></td><td><a href="email-agent-scripts-sops.html">email-agent-scripts-sops.html</a></td></tr>
-<tr><td>VAPI Voice Agent</td><td><span class="badge badge-live">Live</span></td><td>ID: 278eb0d4</td></tr>
-<tr><td>Mock Advisors in GHL</td><td><span class="badge badge-pending">21/50 loaded</span></td><td>GHL contacts tagged liftline-demo</td></tr>
-<tr><td>Master Agent Prompt</td><td><span class="badge badge-done">Built</span></td><td><a href="master-agent-prompt.md">master-agent-prompt.md</a> (duplicatable per company)</td></tr>
-<tr><td>Email Scheduling Workflow</td><td><span class="badge badge-pending">In progress</span></td><td>GHL automation + Outlook sync</td></tr>
-<tr><td>Calendar Integration</td><td><span class="badge badge-pending">Planned</span></td><td>GHL native Outlook calendar sync (two-way)</td></tr>
-<tr><td>Daily Report System</td><td><span class="badge badge-todo">Next</span></td><td>EOD summary to wholesaler</td></tr>
-<tr><td>LiftlineAI.com Deploy</td><td><span class="badge badge-pending">Domain ready</span></td><td>LiftlineAI.com (GoDaddy API connected)</td></tr>
-<tr><td>Salesforce Data Import</td><td><span class="badge badge-pending">CSV import</span></td><td>One-time import, GHL becomes live system. Direct API = Phase 2</td></tr>
-<tr><td>Voice Notes to Salesforce</td><td><span class="badge badge-todo">Bonus add-on</span></td><td>-</td></tr>
+<tr><td>VAPI Voice Agent</td><td><span class="badge badge-done">Built</span></td><td>Priya voice, Toney's A/B/C scripts loaded</td></tr>
+<tr><td>Master Agent Prompt</td><td><span class="badge badge-done">Built</span></td><td>Duplicatable per company (variable table)</td></tr>
+<tr><td>GHL Workflow Spec</td><td><span class="badge badge-done">Written</span></td><td>6 workflows specced (superseded by Python engine)</td></tr>
+<tr><td>Dedicated Sending Domain</td><td><span class="badge badge-pending">Needs DNS setup</span></td><td>liftlineai.com in GoDaddy → GHL</td></tr>
+<tr><td>Google Calendar Sync</td><td><span class="badge badge-pending">Needs Toney to connect</span></td><td>My Staff → Calendar Configuration → Connect Google</td></tr>
+<tr><td>LiftlineAI.com Deploy</td><td><span class="badge badge-todo">Not started</span></td><td>Domain parked, needs DNS to GitHub Pages</td></tr>
+<tr><td>Own VAPI Phone Number</td><td><span class="badge badge-todo">Needs purchase</span></td><td>$2/mo via Twilio or VAPI</td></tr>
+<tr><td>Salesforce Integration</td><td><span class="badge badge-todo">Phase 2</span></td><td>CSV import first, direct API later</td></tr>
 </tbody>
 </table>
-</div>
-
-<!-- HOW THE DATA FLOWS -->
-<div class="card card-full">
-<h2>How the System Tracks Everything (Salesforce Question Answered)</h2>
-<div class="notes">1. ONE-TIME IMPORT: Advisor list comes from Salesforce (CSV export). Names, emails, zones, tiers, last meeting date. Loaded into LiftlineAI system.
-
-2. FROM THAT POINT FORWARD, LIFTLINEAI IS THE LIVE SYSTEM. The AI sends all emails, handles all responses, books all meetings, tracks everything. It knows who had a meeting because IT scheduled it.
-
-3. OUTLOOK CALENDAR SYNC: Two-way. If the wholesaler books something manually (calls an advisor, bumps into them at conference), it shows up in Outlook, syncs to the system, AI sees it.
-
-4. PERIODIC REFRESH: Once a month/quarter, re-import CSV from Salesforce to catch new advisors, tier changes, zone reassignments. AI merges with existing tracking.
-
-5. DAILY REPORT: End of each day, wholesaler gets full summary - new bookings, changes, tomorrow's schedule with drive route, action items.
-
-SALESFORCE = THE ADDRESS BOOK (where advisors live)
-LIFTLINEAI = THE BRAIN (manages the entire scheduling pipeline)
-OUTLOOK = THE COMMUNICATION LAYER (email + calendar, FINRA compliant)
-
-Direct Salesforce API integration = Phase 2, after first paying client and compliance certification.</div>
 </div>
 
 <!-- PROGRESS -->
 <div class="card">
 <h2>Build Progress</h2>
 <div style="margin-bottom:16px">
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Overall</span><span>35%</span></div>
-<div class="progress-bar"><div class="progress-fill" style="width:35%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Overall</span><span>75%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
 </div>
 <div style="margin-bottom:16px">
 <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Presentation Materials</span><span>100%</span></div>
 <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
 </div>
 <div style="margin-bottom:16px">
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Voice Agent</span><span>70%</span></div>
-<div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>GHL Setup</span><span>90%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
 </div>
 <div style="margin-bottom:16px">
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Email Scheduling System</span><span>30%</span></div>
-<div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Email Scheduling System</span><span>85%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+</div>
+<div style="margin-bottom:16px">
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Smart Calendar + Routing</span><span>80%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+</div>
+<div style="margin-bottom:16px">
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Autonomy (Cron + Auto)</span><span>40%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
 </div>
 <div>
-<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Deployment</span><span>20%</span></div>
-<div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:4px"><span>Deployment (LiftlineAI.com)</span><span>10%</span></div>
+<div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
 </div>
 </div>
 
-<!-- TASK LIST -->
+<!-- ZONE STRUCTURE -->
+<div class="card">
+<h2>Zone Structure (Sacramento Demo)</h2>
+<table>
+<thead><tr><th>Zone</th><th>Area</th><th>Contacts</th><th>A</th><th>B</th><th>C</th><th>P</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Sacramento Downtown</td><td>10</td><td>2</td><td>3</td><td>3</td><td>2</td></tr>
+<tr><td>2</td><td>West Sacramento / Davis</td><td>10</td><td>2</td><td>3</td><td>3</td><td>2</td></tr>
+<tr><td>3</td><td>Roseville / Rocklin</td><td>10</td><td>2</td><td>3</td><td>3</td><td>2</td></tr>
+<tr><td>4</td><td>Folsom / El Dorado Hills</td><td>10</td><td>2</td><td>3</td><td>3</td><td>2</td></tr>
+<tr><td>5</td><td>Rancho Cordova / Elk Grove</td><td>10</td><td>2</td><td>3</td><td>3</td><td>2</td></tr>
+</tbody>
+</table>
+<div class="notes">5-week rotation: Zone 1 → 2 → 3 → 4 → 5 → repeat
+A-tier = $2M+ production (morning slots)
+B-tier = $1-2M (mid-day)
+C-tier = under $1M (afternoon)
+Prospect = no business yet (end of day)</div>
+</div>
+
+<!-- TONEY'S ACTION ITEMS -->
 <div class="card card-full">
-<h2>Build Tasks</h2>
+<h2>Toney's Action Items</h2>
 <ul class="task-list">
-<li><span class="check done"></span>Research Thornburg, Hartford, Franklin Templeton, Blue Owl</li>
-<li><span class="check done"></span>Create VAPI voice agent with Toney's real scripts (A/B/C client + Prospect)</li>
-<li><span class="check done"></span>Build demo landing page (LiftlineAI branded)</li>
-<li><span class="check done"></span>Build system overview / pitch deck presentation</li>
-<li><span class="check done"></span>Build email scripts + SOPs playbook</li>
-<li><span class="check done"></span>Start loading 50 mock advisors in GHL (21/50 done)</li>
-<li><span class="check"></span>Finish loading remaining 29 mock advisors</li>
-<li><span class="check"></span>Assign VAPI phone number for demo calls</li>
-<li><span class="check"></span>Build email scheduling workflow in GHL</li>
-<li><span class="check"></span>Set up Google Calendar with zone mapping</li>
-<li><span class="check"></span>Build daily EOD report system</li>
-<li><span class="check"></span>Set up GHL white-label sub-account for Toney</li>
-<li><span class="check"></span>Deploy landing page to LiftlineAI.com (GoDaddy)</li>
-<li><span class="check"></span>Deploy dashboard to LiftlineAI.com</li>
-<li><span class="check"></span>Wire VAPI confirmation calls to calendar events</li>
-<li><span class="check"></span>Compliance review with DJ (FINRA, Outlook archival)</li>
-<li><span class="check"></span>Salesforce import/export integration</li>
-<li><span class="check"></span>Voice notes to Salesforce bonus add-on</li>
-<li><span class="check"></span>Toney signs up for GHL via affiliate link</li>
-<li><span class="check"></span>Finalize pricing / revenue share agreement</li>
+<li><span class="check"></span><strong>Connect Google Calendar:</strong> Settings → My Staff → click name → Calendar Configuration → Connect Google</li>
+<li><span class="check"></span><strong>Set up dedicated domain:</strong> Settings → Email Services → Dedicated Domain → enter liftlineai.com → add DNS records in GoDaddy</li>
+<li><span class="check"></span><strong>Get own VAPI phone number:</strong> $2/mo for demo confirmation calls</li>
+<li><span class="check"></span><strong>Test live reply flow:</strong> Reply to an outreach email → verify auto-response + booking</li>
+<li><span class="check"></span><strong>Review daily report:</strong> Check toney@liftlineai.com for morning report</li>
 </ul>
 </div>
 
@@ -178,33 +220,38 @@ Direct Salesforce API integration = Phase 2, after first paying client and compl
 <h2>Growth Plan</h2>
 <div class="grid" style="margin-bottom:0">
 <div>
-<h3>Phase 1 - Demo Ready (This Week)</h3>
+<h3>Phase 1 - Demo Ready <span class="badge badge-live">NOW</span></h3>
 <ul class="task-list">
-<li>Working voice agent Toney can call live</li>
-<li>Landing page at LiftlineAI.com</li>
-<li>50 mock advisors in demo CRM</li>
-<li>Email scheduling workflow running</li>
-<li>Pitch deck ready for meetings</li>
+<li><span class="check done"></span>50 mock advisors in Toney's GHL</li>
+<li><span class="check done"></span>Smart scheduling engine (geo-clustered)</li>
+<li><span class="check done"></span>Email + SMS outreach (tier-specific)</li>
+<li><span class="check done"></span>Response handler (auto-classify + reply)</li>
+<li><span class="check done"></span>Calendar with appointments</li>
+<li><span class="check done"></span>Daily report system</li>
+<li><span class="check done"></span>Full morning run simulation</li>
+<li><span class="check"></span>Connect Google Calendar</li>
+<li><span class="check"></span>Dedicated sending domain</li>
 </ul>
 </div>
 <div>
-<h3>Phase 2 - First Client (Thornburg)</h3>
+<h3>Phase 2 - First Client</h3>
 <ul class="task-list">
 <li>Pilot with 1 territory, 1 wholesaler</li>
-<li>Real Salesforce data import</li>
-<li>Outlook email integration (compliance)</li>
+<li>Real advisor data import (Salesforce CSV)</li>
+<li>Outlook email integration (FINRA compliance)</li>
 <li>4-6 week pilot measurement</li>
-<li>DJ compliance sign-off</li>
+<li>DJ compliance sign-off (CISSP-ISSMP)</li>
+<li>Deploy to LiftlineAI.com</li>
 </ul>
 </div>
 <div>
 <h3>Phase 3 - Scale</h3>
 <ul class="task-list">
 <li>Roll out to additional territories</li>
-<li>Add Hartford, Blue Owl, Franklin Templeton</li>
+<li>Add more firms</li>
 <li>Company-specific AI templates</li>
-<li>Realtor version for buddy's coaching biz</li>
-<li>Logistics prospecting system (DoD, sports, tradeshows)</li>
+<li>Realtor version (buddy's coaching biz)</li>
+<li>Logistics prospecting (DoD, sports)</li>
 </ul>
 </div>
 <div>
@@ -214,62 +261,46 @@ Direct Salesforce API integration = Phase 2, after first paying client and compl
 <li>3 firms = $90K/month</li>
 <li>Realtor expansion = $50K+/month</li>
 <li>Dylan's 20% = $18K-$34K/month</li>
-<li>Build fee: TBD (propose $5K-$10K)</li>
+<li>Build fee: TBD ($5K-$10K)</li>
 </ul>
 </div>
 </div>
 </div>
 
-<!-- APPS PIPELINE -->
-<div class="card card-full">
-<h2>Full App Pipeline (Toney's 5 Products)</h2>
-<table>
-<thead><tr><th>#</th><th>App</th><th>Description</th><th>Status</th><th>Priority</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>AI Auto Scheduler</td><td>Email-based appointment booking with Outlook + Salesforce. Zone-aware, tier-prioritized, geography-smart.</td><td><span class="badge badge-pending">Building now</span></td><td>HIGHEST</td></tr>
-<tr><td>2</td><td>Voice-to-Email Follow-Up</td><td>Rep speaks notes, AI generates and sends personalized follow-up email through Outlook.</td><td><span class="badge badge-todo">Phase 2</span></td><td>High</td></tr>
-<tr><td>3</td><td>Monthly Wrap-Up Report</td><td>Pulls financial data, sends monthly summary email to each advisor.</td><td><span class="badge badge-todo">Phase 2</span></td><td>Medium</td></tr>
-<tr><td>4</td><td>Realtor Version</td><td>Same system adapted for real estate. Buddy has 2nd largest RE coaching biz in country + speaks nationally.</td><td><span class="badge badge-todo">Phase 3</span></td><td>High (massive distribution)</td></tr>
-<tr><td>5</td><td>Logistics Prospecting</td><td>AI prospecting for DoD, US currency transport, sports/entertainment, tradeshows. Highly specialized.</td><td><span class="badge badge-todo">Phase 3</span></td><td>Medium</td></tr>
-</tbody>
-</table>
-</div>
-
-<!-- FATHOM TRANSCRIPTS -->
+<!-- CALL HISTORY -->
 <div class="card">
-<h2>Call History / Transcripts</h2>
+<h2>Call History</h2>
 <table>
 <thead><tr><th>Date</th><th>Topic</th></tr></thead>
 <tbody>
-<tr><td>Mar 2, 2026</td><td><a href="file:///Users/dylanewing/Documents/Fathom-Transcripts/2026-03-02-toney-sebra-quiz-session.txt">Pattern Map Quiz + Meditation (57 min)</a></td></tr>
-<tr><td>Mar 10, 2026</td><td><a href="file:///Users/dylanewing/Documents/Fathom-Transcripts/2026-03-10-toney-sebra-freedom-code.txt">Freedom Code Day 1 (35 min)</a></td></tr>
-<tr><td>Mar 24, 2026</td><td><a href="https://fathom.video/calls/610813699?tab=summary">AI App Build Discussion (57 min)</a></td></tr>
+<tr><td>Mar 2, 2026</td><td>Pattern Map Quiz + Meditation (57 min)</td></tr>
+<tr><td>Mar 10, 2026</td><td>Freedom Code Day 1 (35 min)</td></tr>
+<tr><td>Mar 24, 2026</td><td>AI App Build Discussion (57 min)</td></tr>
+<tr><td>Mar 27, 2026</td><td>Full System Build + Live Demo (2+ hrs)</td></tr>
 </tbody>
 </table>
 </div>
 
-<!-- NOTES -->
+<!-- KEY NOTES -->
 <div class="card">
 <h2>Key Notes</h2>
-<div class="notes">- Toney is a Freedom Code beta tester AND AI build partner - TWO SEPARATE TRACKS
-- He's organized and needs structure - don't bounce between topics
-- Got burned by AIAA/Jordan Lee ($40-50K, denied refund) - trust is important
-- His buddy has the 2nd largest RE coaching biz in the country - MASSIVE scale potential
-- Logistics connections: DoD, US currency, sports/entertainment, tradeshows
-- Interested in LegalShield too
-- New logistics job starting end of April with childhood friend
-- Compliance is critical - FINRA, all emails through Outlook, no performance claims
-- Target firms use Salesforce + Broadridge FMAX
-- His scripts are warm/consultative, not salesy
-- A clients = $2M+ production, B = $1-2M, C = under $1M, Prospect = no business yet
-- Each rep has $100K-$150K annual budget - $1,500/mo is a no-brainer
-- "I need a solid partner in the development side of things" - his exact words</div>
+<div class="notes">SEPARATION: Freedom Code beta tester AND AI build partner - TWO SEPARATE TRACKS
+TRUST: Got burned by AIAA/Jordan Lee ($40-50K, denied refund) - trust matters
+SCALE: Buddy has 2nd largest RE coaching biz in country - MASSIVE distribution
+LOGISTICS: DoD, US currency, sports/entertainment, tradeshows connections
+COMPLIANCE: FINRA required, all emails through Outlook, no performance claims
+CONFIRMATION: Email + SMS (NOT phone calls) - advisors often only have cell
+STANDALONE: Each client gets their own instance - standalone per sign-up
+TONEY FEEDBACK: No Thornburg in social proof, no performance claims, compliance Phase 2
+Footer: "AI Powered Wholesaler Solutions" (not Elevated AI)
+A clients = $2M+ production | B = $1-2M | C = under $1M | Prospect = no business
+Each rep has $100K-$150K annual budget - $1,500/mo is a no-brainer
+"I need a solid partner in the development side of things" - his exact words</div>
 </div>
 
 </div>
 
 <script>
-// Make checkboxes toggleable
 document.querySelectorAll('.check').forEach(el=>{
   el.addEventListener('click',()=>el.classList.toggle('done'));
 });

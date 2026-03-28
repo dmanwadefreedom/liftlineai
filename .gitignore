@@ -1,3 +1,8 @@
 # Private files - never push to public repo
 SESSION-SAVE-LIFTLINEAI.md
 toney-dashboard.html
+engine-state.json
+engine-log.json
+schedules.json
+responder-log.json
+reports/
